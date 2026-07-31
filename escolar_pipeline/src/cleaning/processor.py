@@ -27,6 +27,9 @@ def clean_data(df_raw: pd.DataFrame) -> pd.DataFrame:
     # Remove também caracteres especiais se houver
     df.columns = df.columns.str.replace('ó', 'o').str.replace('í', 'i').str.replace('ã', 'a')
     
+    # 2.1 NOVO: Remover colunas "unnamed" (fantasmas geradas por formatação do Excel)
+    df = df.loc[:, ~df.columns.str.contains('unnamed', case=False)]
+    
     # 3. Remover linhas inteiramente vazias
     df = df.dropna(axis=0, how='all')
     
